@@ -11,7 +11,7 @@ inputBtn.addEventListener('click', function() {
     renderLeads()
 });
 
-//This below is ONE way of doing it. Loops through the array and then uses the .innerText element to access the content and adds a list when the button is clicked.
+//This: below is ONE way of doing it. Loops through the array and then uses the .innerText element to access the content and adds a list when the button is clicked.
 // 1. Create element
 // 2. setting text content
 // 3. APPENDING
