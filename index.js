@@ -1,14 +1,41 @@
 let myLeads = [];
+let oldLeads = [];
 const inputEl = document.querySelector('#input-el')
 const inputBtn = document.querySelector('#input-btn');
 const ulEl = document.querySelector('#ul-el')
+const deleteBtn = document.querySelector('#delete-btn')
+const leadsFromLocalStorage = JSON.parse( localStorage.getItem('myLeads'));
 
+if (leadsFromLocalStorage){
+    myLeads = leadsFromLocalStorage;
+    render(myLeads)
+}
+
+function render(leads) {
+    let listItems = ''
+    for (let i = 0; i < leads.length; i++) {
+       listItems += 
+       `<li>
+            <a target='_blank' href='${leads[i]}'>
+                ${leads[i]}
+            </a>
+        </li>`
+    }
+    ulEl.innerHTML = listItems;
+}
+
+deleteBtn.addEventListener('dblclick', function() {
+    localStorage.clear()
+    myLeads = [];
+    render(myLeads)
+})
 
 inputBtn.addEventListener('click', function() {
     myLeads.push(inputEl.value)
     //Removes text from search after button pressed
     inputEl.value = ''
-    renderLeads()
+    localStorage.setItem('myLeads', JSON.stringify(myLeads))
+    render(myLeads)
 });
 
 //This: below is ONE way of doing it. Loops through the array and then uses the .innerText element to access the content and adds a list when the button is clicked.
@@ -25,15 +52,3 @@ inputBtn.addEventListener('click', function() {
 // ulEl.append(li)
 // };
 
-function renderLeads() {
-    let listItems = ''
-    for (let i = 0; i < myLeads.length; i++) {
-       listItems += 
-       `<li>
-            <a target='_blank' href='${myLeads[i]}'>
-                ${myLeads[i]}
-            </a>
-        </li>`
-    }
-    ulEl.innerHTML = listItems;
-}
