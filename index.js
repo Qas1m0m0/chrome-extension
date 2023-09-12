@@ -1,15 +1,28 @@
 let myLeads = [];
 let oldLeads = [];
-const inputEl = document.querySelector('#input-el')
+const inputEl = document.querySelector('#input-el');
 const inputBtn = document.querySelector('#input-btn');
-const ulEl = document.querySelector('#ul-el')
-const deleteBtn = document.querySelector('#delete-btn')
+const ulEl = document.querySelector('#ul-el');
+const deleteBtn = document.querySelector('#delete-btn');
 const leadsFromLocalStorage = JSON.parse( localStorage.getItem('myLeads'));
+const tabBtn = document.querySelector('#tab-btn');
 
 if (leadsFromLocalStorage){
     myLeads = leadsFromLocalStorage;
     render(myLeads)
 }
+
+tabBtn.addEventListener('click', function() {
+    //console.log(tabs[0].url)
+
+    //Access chrome object (tabs) with the query method(query)- grabbing a hold of tabs(querying them). Specify that by wanting ACTIVE tab(the one currently open, Alongside cureent window(could have multiple broswer windows open, so specify which window(active).Then write function, which will be triggered when chrome finds the tab function- when triggers it'll run tab variable;
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+    myLeads.push(tabs[0].url)
+    localStorage.setItem('myLeads', JSON.stringify(myLeads));
+    render(myLeads);
+    })
+});
+   
 
 function render(leads) {
     let listItems = ''
